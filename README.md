@@ -23,11 +23,19 @@ It serves both as a personal showcase and a playground to experiment with modern
 
 Each subproject includes its own `README.md` with build and run instructions.
 
+## 💾 Data Source
+
+This project uses data from the public API **Le Système Solaire**  
+➡️ [https://api.le-systeme-solaire.net/](https://api.le-systeme-solaire.net/)  
+
 ## 💬 Remarks
 
 This project includes visual elements inspired by the game *Among Us*.  
 All rights to these characters belong to **Innersloth LLC**.  
 This is a **non-commercial fan work**, created purely for demonstration purposes.
+
+The login page screenshot shown in this portfolio is from **Cobria**, a product developed by **Jak Solutions**.  
+Displayed for portfolio purposes only. All rights and trademarks belong to their respective owners.
 
 ## 📄 License
 
