@@ -29,6 +29,7 @@ import kotlin.math.sqrt
 import kotlin.random.Random
 
 open class MainViewModel() {
+    val toastMessage: MutableState<String> = mutableStateOf("")
     val showProjects = mutableStateOf(false)
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.Default + job)
@@ -161,5 +162,9 @@ open class MainViewModel() {
         println("select project with index: $index")
         initAnimations()
         updateFont()
+    }
+
+    fun showToast(message: String){
+        toastMessage.value = message
     }
 }

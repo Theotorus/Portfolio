@@ -21,7 +21,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextDecoration
@@ -102,14 +104,15 @@ fun IntroductionPage(vm: MainViewModel) {
                 }
             }
         }
-        Footer(Modifier.fillMaxWidth().background(Color.Black.copy(alpha = 0.5f)).align(Alignment.BottomCenter))
-
+        Footer(
+            vm = vm,
+            modifier = Modifier.fillMaxWidth().background(Color.Black.copy(alpha = 0.5f)).align(Alignment.BottomCenter)
+        )
     }
 }
 
 @Composable
 private fun Background(w: Int){
-    // Animation de gradient (défilement vertical lent)
     val infiniteTransition = rememberInfiniteTransition()
     val offsetAnim by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -194,16 +197,20 @@ private fun Background(w: Int){
 }
 
 @Composable
-private fun Footer(modifier: Modifier) {
+private fun Footer(vm: MainViewModel, modifier: Modifier) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        AppText(
+        val clipboardManager = LocalClipboardManager.current
+        HoverText(
             text = "christophermx95@gmail.com",
-            color = Color.White,
-            fontSize = 22
-        )
+            fontSize = 22,
+            color = Color.White
+        ){
+            clipboardManager.setText(AnnotatedString("christophermx95@gmail.com"))
+            vm.showToast("Adresse copiée dans le presse papier!")
+        }
         HoverText(
             text = "https://github.com/Theotorus",
             fontSize = 22,

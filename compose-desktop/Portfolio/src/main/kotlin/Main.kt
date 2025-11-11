@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
@@ -15,6 +16,7 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import mc.model.projects
+import mc.ui.components.ToastHost
 import mc.ui.view.IntroductionPage
 import mc.ui.view.ProjectPage
 import mc.ui.viewmodel.MainViewModel
@@ -57,6 +59,7 @@ fun App() {
                 }else{
                     IntroductionPage(vm)
                 }
+                ToastHost(vm)
             }
         }
     }
