@@ -4,7 +4,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.platform.Font
 
 object Repository {
-    var currentFont = mutableStateOf(Font("font/orbitron-regular.ttf"))
+    var currentFont = mutableStateOf(Font("font/firacode-regular.ttf"))
     fun buildText(list: List<String>, chip: String): String{
         var formattedText = ""
         for(element in list){

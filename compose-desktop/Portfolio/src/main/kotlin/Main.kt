@@ -15,6 +15,7 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import mc.model.projects
+import mc.ui.view.IntroductionPage
 import mc.ui.view.ProjectPage
 import mc.ui.viewmodel.MainViewModel
 import java.awt.Dimension
@@ -41,7 +42,9 @@ fun App() {
             shape = MaterialTheme.shapes.medium,
             color = projects[vm.currentProjectIndex.value].backgroundColor
         ) {
-            BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            BoxWithConstraints(
+                modifier = Modifier.fillMaxSize()
+            ) {
                 val w = (constraints.maxWidth / LocalDensity.current.density).toInt()
                 val h = (constraints.maxHeight / LocalDensity.current.density).toInt()
                 // Quand w/h changent, on écrit dans le ViewModel (déclenche recomposition partout où il est observé)
@@ -49,7 +52,11 @@ fun App() {
                 LaunchedEffect(w, h) {
                     vm.updateWindowSize(w, h)
                 }
-                ProjectPage(project = projects[vm.currentProjectIndex.value], vm = vm)
+                if(vm.showProjects.value) {
+                    ProjectPage(project = projects[vm.currentProjectIndex.value], vm = vm)
+                }else{
+                    IntroductionPage(vm)
+                }
             }
         }
     }

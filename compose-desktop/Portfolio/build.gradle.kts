@@ -26,7 +26,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.AppImage)
             packageName = "Portfolio"
-            packageVersion = "1.0.0"
+            packageVersion = "1.0.1"
             includeAllModules = true
         }
         buildTypes.release.proguard {

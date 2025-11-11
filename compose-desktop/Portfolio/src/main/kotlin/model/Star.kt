@@ -13,7 +13,7 @@ class Star(
     override val rotation: MutableState<Float> = mutableStateOf(0f)
 
     override fun move() {
-        position.value = (position.value.first-(velocity.first*10f)) to position.value.second
+        position.value = (position.value.first-(velocity.first*6f)) to position.value.second
         if (position.value.first <= 0f) position.value = 1f to position.value.second
     }
 }

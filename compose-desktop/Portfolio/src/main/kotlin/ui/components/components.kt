@@ -1,9 +1,12 @@
 package mc.ui.components
 
+import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
@@ -33,7 +36,7 @@ fun AppText(
     color: Color,
     fontSize: Int,
     fontStyle: FontStyle = FontStyle.Normal,
-    textDecoration: TextDecoration = TextDecoration.None
+    textDecoration: TextDecoration = TextDecoration.None,
 ) {
     Text(
         text = text,

@@ -7,7 +7,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,6 +45,9 @@ fun ProjectPage(project: Project = projects[0], vm: MainViewModel) {
         vm.initAnimations()
     }
     BoxWithConstraints{
+        IconButton(modifier = Modifier.align(Alignment.TopStart), onClick = {vm.back()}){
+            Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back", tint = project.otherTextColor)
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -237,7 +245,7 @@ fun DetailsColumn(modifier: Modifier, project: Project) {
             AppText(
                 text = "Remarques : ${project.remarks}",
                 color = project.otherTextColor,
-                fontSize = 18
+                fontSize = 20
             )
         }
     }
@@ -251,7 +259,7 @@ fun HorizontalCategory(title: String, colors: List<Color>, elements: List<String
         color = colors[0],
         textDecoration = TextDecoration.Underline,
     )
-    val chunks = elements.chunked(3)
+    val chunks = elements.chunked(2)
     chunks.forEach { chunk ->
         LazyRow(
             modifier = Modifier.padding(vertical = 8.dp),

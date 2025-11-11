@@ -29,6 +29,7 @@ import kotlin.math.sqrt
 import kotlin.random.Random
 
 open class MainViewModel() {
+    val showProjects = mutableStateOf(false)
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.Default + job)
     var windowSize by mutableStateOf( IntSize(0, 0))
@@ -42,9 +43,10 @@ open class MainViewModel() {
 
     val orbitron = Font("font/orbitron-regular.ttf")
     val fredoka = Font("font/fredoka.ttf")
+    val fira = Font("font/firacode-regular.ttf")
     val currentProjectIndex = mutableStateOf(0)
     val sprites: SnapshotStateList<Sprite> = mutableStateListOf()
-    val starProperties = listOf((5f to 0.00008f), (4f to 0.00004f), (2f to 0.00001f))
+    val starProperties = listOf((4f to 0.00008f), (3f to 0.00003f), (2f to 0.00001f))
     val floatingAmongUsImage = listOf(
         "drawable/among_us_red_nb.png",
         "drawable/among_us_blue_nb.png",
@@ -121,25 +123,43 @@ open class MainViewModel() {
         sprites.clear()
         if (projects.size > currentProjectIndex.value + 1) {
             currentProjectIndex.value++
+            updateFont()
+        }
+        initAnimations()
+    }
+
+    fun updateFont(){
+        if(showProjects.value) {
             when(currentProjectIndex.value) {
                 0 -> Repository.currentFont.value = orbitron
                 1 -> Repository.currentFont.value = fredoka
-                else -> Repository.currentFont.value = fredoka
+                else -> Repository.currentFont.value = fira
             }
+        }else{
+            Repository.currentFont.value = fira
         }
-        initAnimations()
     }
 
     fun onPrevious() {
         sprites.clear()
         if (currentProjectIndex.value > 0) {
             currentProjectIndex.value--
-            when(currentProjectIndex.value) {
-                0 -> Repository.currentFont.value = orbitron
-                1 -> Repository.currentFont.value = fredoka
-                else -> Repository.currentFont.value = fredoka
-            }
+            updateFont()
         }
         initAnimations()
+    }
+
+    fun back(){
+        showProjects.value = false
+        sprites.clear()
+    }
+
+    fun selectProject(index: Int) {
+        showProjects.value = true
+        sprites.clear()
+        currentProjectIndex.value = index
+        println("select project with index: $index")
+        initAnimations()
+        updateFont()
     }
 }
