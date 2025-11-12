@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mc.ui.components.AppText
 import mc.ui.viewmodel.MainViewModel
+import mc.utils.TranslationManager
 import java.awt.Desktop
 import java.net.URI
 
@@ -51,16 +52,14 @@ fun IntroductionPage(vm: MainViewModel) {
                     fontSize = 44
                 )
                 AppText(
-                    text = "Développeur web & mobile",
+                    text = TranslationManager.get("intro.title"),
                     color = Color.White,
                     fontSize = 40,
                 )
             }
             AppText(
                 modifier = Modifier.background(color = Color.Black.copy(alpha = 0.25f)),
-                text = "Bienvenue sur mon portfolio.\n" +
-                        "Vous trouverez ici mes projets web et mobiles, développés avec différentes technologies et approches.\n" +
-                        "N'hésitez pas à me contacter si mon travail vous plaît.",
+                text = TranslationManager.get("intro.welcome"),
                 color = Color.White.copy(alpha = 0.8f),
                 fontSize = 24
             )
@@ -70,7 +69,7 @@ fun IntroductionPage(vm: MainViewModel) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 AppText(
-                    text = "Mes projets",
+                    text = TranslationManager.get("intro.my_projects"),
                     color = Color.White,
                     fontSize = 40,
                     textDecoration = TextDecoration.Underline,
@@ -108,6 +107,35 @@ fun IntroductionPage(vm: MainViewModel) {
             vm = vm,
             modifier = Modifier.fillMaxWidth().background(Color.Black.copy(alpha = 0.5f)).align(Alignment.BottomCenter)
         )
+        Row(
+            modifier = Modifier.align(Alignment.TopEnd).padding(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Text(
+                modifier = Modifier.clickable {
+                    TranslationManager.load("en")
+                    vm.currentLanguage.value = "en"
+                },
+                text = "EN",
+                color = if(vm.currentLanguage.value == "en") Color.White else Color.Gray
+            )
+            Text(
+                modifier = Modifier.clickable {
+                    TranslationManager.load("fr")
+                    vm.currentLanguage.value = "fr"
+                },
+                text = "FR",
+                color = if(vm.currentLanguage.value == "fr") Color.White else Color.Gray
+            )
+            Text(
+                modifier = Modifier.clickable {
+                    TranslationManager.load("nl")
+                    vm.currentLanguage.value = "nl"
+                },
+                text = "NL",
+                color = if(vm.currentLanguage.value == "nl") Color.White else Color.Gray
+            )
+        }
     }
 }
 
@@ -209,7 +237,7 @@ private fun Footer(vm: MainViewModel, modifier: Modifier) {
             color = Color.White
         ){
             clipboardManager.setText(AnnotatedString("christophermx95@gmail.com"))
-            vm.showToast("Adresse copiée dans le presse papier!")
+            vm.showToast(TranslationManager.get("general.copied_to_clipboard"))
         }
         HoverText(
             text = "https://github.com/Theotorus",

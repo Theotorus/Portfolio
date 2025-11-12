@@ -3,6 +3,7 @@ package mc.model
 import androidx.compose.ui.graphics.Color
 import mc.model.PictureOrientation.LANDSCAPE
 import mc.model.PictureOrientation.PORTRAIT
+import mc.utils.TranslationManager
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -12,10 +13,7 @@ val projects: List<Project> = listOf(
         title = "Cosmic",
         titleColor = Color(74, 35, 165, 255),
         creationDate = LocalDate.of(2024, 5, 15),
-        description = "Cosmic est une application Android qui relaye les informations issues d'une API publique" +
-                " sur les objets de notre système solaire : étoiles, planètes, lunes, astéroïdes, comètes et planètes naines." +
-                "Elle permet de visualiser, filtrer et ordonner les corps célestes, accéder à leurs détails et " +
-                "se représenter leurs distances par rapport au Soleil.",
+        description = "projects.cosmic.description",
         linkedTechnologies = listOf(
             "Android Studio",
             "Kotlin",
@@ -28,20 +26,20 @@ val projects: List<Project> = listOf(
             "Navigation Compose"
         ),
         keyFunctionalities = listOf(
-            "Affichage d'une liste de corps célestes avec informations principales",
-            "Filtrage et tri des objets selon différents critères",
-            "Détails complets d’un corps céleste sur un second écran",
-            "Visualisation de la distance par rapport au Soleil sur un écran dédié",
-            "Gestion des favoris avec persistance locale (Room)"
+            "projects.cosmic.key_functionalities.0",
+            "projects.cosmic.key_functionalities.1",
+            "projects.cosmic.key_functionalities.2",
+            "projects.cosmic.key_functionalities.3",
+            "projects.cosmic.key_functionalities.4"
         ),
         whatILearn = listOf(
-            "Premier projet kotlin & jetpack compose",
-            "Intégration d'une API REST avec Retrofit",
-            "Gestion d’état avec MVVM et Compose",
-            "Persistance locale avec Room",
-            "Navigation multi-écran avec Navigation Compose",
-            "Visualisation et interaction graphique dans Compose",
-            "Intégration de publicité bannière"
+            "projects.cosmic.learn.0",
+            "projects.cosmic.learn.1",
+            "projects.cosmic.learn.2",
+            "projects.cosmic.learn.3",
+            "projects.cosmic.learn.4",
+            "projects.cosmic.learn.5",
+            "projects.cosmic.learn.6"
         ),
         images = listOf(
             "drawable/cosmic1.jpg" to PORTRAIT,
@@ -56,13 +54,7 @@ val projects: List<Project> = listOf(
         title = "In life Among us",
         titleColor = Color(111, 15, 15, 255),
         creationDate = LocalDate.of(2024, 10, 10),
-        description = "In Life Among Us est un jeu multijoueur inspiré d’Among Us, mais ancré dans le monde réel. " +
-                "Les joueurs se connectent à un serveur local Spring Boot via une application Android. Chaque joueur " +
-                "reçoit un rôle — imposteur ou équipier — et doit interagir avec son environnement physique. " +
-                "Les QR codes placés dans le lieu servent de points d’interaction : les joueurs les scannent pour " +
-                "réaliser des actions, des missions ou même déclencher un appel d’urgence. Ainsi, presque toutes les activités " +
-                "passent par ces codes. Cette dynamique permet de créer " +
-                "une expérience immersive, mêlant jeu social et déplacement réel.",
+        description = "projects.in_life_among_us.description",
         linkedTechnologies = listOf(
             "Java",
             "Spring",
@@ -82,17 +74,17 @@ val projects: List<Project> = listOf(
             "Accompanist Permissions"
         ),
         keyFunctionalities = listOf(
-            "Connexion des joueurs à un serveur local Spring Boot pour synchroniser les parties",
-            "Attribution automatique des rôles : imposteur ou crew mate",
-            "Interaction via QR codes : preque toutes les actions du jeu nécessitent de scanner un code présent dans le lieu",
-            "Gestion d’actions contextuelles (missions, sabotages, appels d’urgence) depuis l’application",
-            "Suivi de la dernière position connue des joueurs via les QR codes scannés",
-            "Communication client-serveur sécurisée via Retrofit / OkHttp",
-            "Utilisation de CameraX et permissions dynamiques pour le scan des codes QR"
+            "projects.in_life_among_us.key_functionalities.0",
+            "projects.in_life_among_us.key_functionalities.1",
+            "projects.in_life_among_us.key_functionalities.2",
+            "projects.in_life_among_us.key_functionalities.3",
+            "projects.in_life_among_us.key_functionalities.4",
+            "projects.in_life_among_us.key_functionalities.5",
+            "projects.in_life_among_us.key_functionalities.6"
         ),
         whatILearn = listOf(
-            "Premier projet personnel avec un serveur spring",
-            "Gestion de la caméra, des permissions, du flash et des QR codes"
+            "projects.in_life_among_us.learn.0",
+            "projects.in_life_among_us.learn.1"
         ),
         images = listOf(
             "drawable/in_life_among_us_intro_screen.jpg" to PORTRAIT,
@@ -101,16 +93,13 @@ val projects: List<Project> = listOf(
         ),
         backgroundColor = Color(10, 0, 0, 255),
         otherTextColor = Color(219, 33, 33, 255),
-        remarks = "⚠️Ce projet est un fan work non commercial réalisé à des fins de démonstration.*\nEn cours de développement."
+        remarks = "projects.in_life_among_us.remarks",
     ),
     Project(
         title = "Cobria",
         titleColor = Color.Black,
         creationDate = LocalDate.of(2025,7,28),
-        description = "Cobria est un site web réel crée par Jak Solutions dont le but est d'accompagner les entrepreneurs " +
-                "dans leur travail. Ma contribution dans ce vaste projet est minime mais elle m'a permis de travailler " +
-                "sur un véritable projet professionnel. J'ai principalement travailler sur l'onboarding, le système de " +
-                "récompense et sur le responsive de certains composants de Cobria.",
+        description = "projects.cobria.description",
         linkedTechnologies = listOf(
             "Docker",
             "Rider",
@@ -124,18 +113,15 @@ val projects: List<Project> = listOf(
             "Redux"
         ),
         keyFunctionalities = listOf(
-            "Créer et gérer ses contacts (clients, fournisseurs, etc.)",
-            "Créer et gérer ses devis",
-            "Créer et gérer les factures liés aux devis",
-            "Construire et gérer un planning",
-            "Assister la création des différents documents par IA"
+            "projects.cobria.key_functionalities.0",
+            "projects.cobria.key_functionalities.1",
+            "projects.cobria.key_functionalities.2",
+            "projects.cobria.key_functionalities.3",
+            "projects.cobria.key_functionalities.4"
         ),
         whatILearn = listOf(
-            "React",
-            "Dotnet",
-            "Redux",
-            "React Joyride",
-            "Travail en équipe avec git"
+            "projects.cobria.learn.0",
+            "projects.cobria.learn.1",
         ),
         images = listOf(
             "drawable/cobria_1.png" to LANDSCAPE,

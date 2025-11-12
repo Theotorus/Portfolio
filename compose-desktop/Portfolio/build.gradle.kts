@@ -3,10 +3,11 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 plugins {
     kotlin("jvm") version "1.9.20"
     id("org.jetbrains.compose") version "1.6.0"
+    kotlin("plugin.serialization") version "1.9.20"
 }
 
 group = "mc"
-version = "1.0-SNAPSHOT"
+version = "1.0.3"
 
 repositories {
     mavenCentral()
@@ -17,6 +18,7 @@ repositories {
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 }
 
 compose.desktop {
@@ -26,7 +28,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.AppImage)
             packageName = "Portfolio"
-            packageVersion = "1.0.2"
+            packageVersion = "1.0.3"
             includeAllModules = true
         }
         buildTypes.release.proguard {

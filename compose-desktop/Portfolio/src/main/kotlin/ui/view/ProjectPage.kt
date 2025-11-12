@@ -9,10 +9,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import mc.model.PictureOrientation
@@ -36,6 +33,7 @@ import mc.model.projects
 import mc.ui.components.AppText
 import mc.ui.components.HorizontalSpacer
 import mc.ui.viewmodel.MainViewModel
+import mc.utils.TranslationManager
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -90,11 +88,13 @@ fun ProjectHeader(modifier: Modifier, project: Project) {
         ) {
             AppText(
                 text = project.title,
-                fontSize = 60,
+                fontSize = 54,
                 color = project.titleColor,
             )
+            val prefix: String = TranslationManager.get("projects.date_prefix")
+            val date: String = project.creationDate.format(dateFormatter).toString()
             AppText(
-                text = "Projet initié le ${project.creationDate.format(dateFormatter)}",
+                text = "$prefix $date",
                 fontSize = 42,
                 color = project.titleColor,
                 fontStyle = FontStyle.Italic,
@@ -132,16 +132,12 @@ fun ProjectBody(
                     ).rotate(sprite.rotation.value)
             )
         }
-        val descriptionFontSize = when (project.description.length) {
-            in (0..320) -> 36
-            in (321..400) -> 32
-            else -> 28
-        }
+
         Column(modifier = Modifier.fillMaxWidth()) {
             AppText(
                 modifier = Modifier.fillMaxWidth().wrapContentHeight(),
-                text = project.description,
-                fontSize = descriptionFontSize,
+                text = TranslationManager.get(project.description),
+                fontSize = 28,
                 color = project.otherTextColor
             )
             Row(
@@ -203,22 +199,24 @@ fun ActionBox(vm: MainViewModel, project: Project, height: Float) {
         modifier = Modifier.fillMaxWidth().height(height.dp)
     ) {
         if (vm.currentProjectIndex.value > 0) {
+            val previous = TranslationManager.get("general.previous")
             AppText(
                 modifier = Modifier.align(Alignment.CenterStart).clickable {
                     vm.onPrevious()
                 },
-                text = "◀ Projet précédent",
+                text = "◀ $previous",
                 textDecoration = TextDecoration.Underline,
                 fontSize = 20,
                 color = project.otherTextColor,
             )
         }
         if (vm.currentProjectIndex.value < projects.size - 1) {
+            val next = TranslationManager.get("general.next")
             AppText(
                 modifier = Modifier.align(Alignment.CenterEnd).clickable {
                     vm.onNext()
                 },
-                text = "Projet suivant ▶",
+                text = "$next ▶",
                 textDecoration = TextDecoration.Underline,
                 fontSize = 20,
                 color = project.otherTextColor,
@@ -233,7 +231,11 @@ fun DetailsColumn(modifier: Modifier, project: Project) {
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        val titles = listOf("Technologies utilisées", "Fonctionalités clés", "Ce que j'ai appris / amélioré")
+        val titles = listOf(
+            TranslationManager.get("projects.categories.0"),
+            TranslationManager.get("projects.categories.1"),
+            TranslationManager.get("projects.categories.2")
+        )
         val colors = listOf(project.titleColor, project.otherTextColor)
         val elements = listOf(project.linkedTechnologies, project.keyFunctionalities, project.whatILearn)
         val chips = listOf("⚙️", "🧩", "✨")
@@ -242,8 +244,9 @@ fun DetailsColumn(modifier: Modifier, project: Project) {
             Category(title = titles[i], colors, elements[i], chips[i])
         }
         if (project.remarks.isNotEmpty()) {
+            val t = TranslationManager.get("projects.categories.3")
             AppText(
-                text = "Remarques : ${project.remarks}",
+                text = "$t : ${TranslationManager.get(project.remarks)}",
                 color = project.otherTextColor,
                 fontSize = 20
             )

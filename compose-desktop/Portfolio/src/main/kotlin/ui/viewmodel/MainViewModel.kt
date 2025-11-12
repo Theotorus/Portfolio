@@ -22,13 +22,16 @@ import mc.model.Repository
 import mc.model.Sprite
 import mc.model.Star
 import mc.model.projects
+import mc.utils.TranslationManager
 import java.time.LocalTime
+import java.util.Locale
 import kotlin.math.cos
 import kotlin.math.ln
 import kotlin.math.sqrt
 import kotlin.random.Random
 
 open class MainViewModel() {
+    val currentLanguage = mutableStateOf("en")
     val toastMessage: MutableState<String> = mutableStateOf("")
     val showProjects = mutableStateOf(false)
     private val job = SupervisorJob()
@@ -61,6 +64,10 @@ open class MainViewModel() {
         "drawable/among_us_yellow_nb.png"
     )
 
+    init {
+        TranslationManager.load(Locale.getDefault().language)
+        currentLanguage.value = Locale.getDefault().language
+    }
     fun initAnimations() {
         sprites.clear()
         when(currentProjectIndex.value) {
@@ -166,5 +173,9 @@ open class MainViewModel() {
 
     fun showToast(message: String){
         toastMessage.value = message
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(1500)
+            toastMessage.value = ""
+        }
     }
 }
