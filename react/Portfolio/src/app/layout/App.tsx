@@ -1,8 +1,11 @@
-function App() {
+import {Outlet} from "react-router-dom"
+import {Toaster} from "react-hot-toast";
 
-  return (
-      <p>ok</p>
-  )
+export default function App() {
+    return (
+        <>
+            <Outlet/>
+            <Toaster position="bottom-center"/>
+        </>
+    )
 }
-
-export default App
