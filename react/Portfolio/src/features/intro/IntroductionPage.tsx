@@ -4,14 +4,24 @@ import HoverButton from "../../app/shared/components/HoverButton.tsx";
 import {useTranslation} from "react-i18next";
 import {useNavigate, useParams} from "react-router-dom";
 import MainHeader from "../../app/layout/MainHeader.tsx";
-import {setFont} from "../../app/fontsSlice.ts";
+import {setFont} from "@app/fontsSlice.ts";
 import IntroFooter from "./IntroFooter.tsx";
+import {useEffect} from "react";
+import i18n from "../../i18n.ts";
 
 function IntroductionPage() {
     const {t} = useTranslation();
     const white = "#ffffff"
     const navigate = useNavigate();
-    const lang = useParams();
+    const {lang} = useParams();
+
+    useEffect(() => {
+        const detected = i18n.language;
+        if (!lang) {
+            navigate(`/intro/${detected}`);
+        }
+    }, []);
+
 
     const handleSelectProject = (index: number) => {
         switch(index) {

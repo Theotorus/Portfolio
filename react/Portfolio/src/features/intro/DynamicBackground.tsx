@@ -30,7 +30,7 @@ const DynamicBackground: React.FC = () => {
                 0,
                 500 * progress - 750,
                 400 * progress,
-                w * 5 * progress
+                Math.max(1,w * 5 * progress)
             );
             grad1.addColorStop(0.1, "transparent");
             grad1.addColorStop(0.2, "#E03535");
@@ -49,7 +49,7 @@ const DynamicBackground: React.FC = () => {
                 0,
                 w * 1.5,
                 h * 0.9,
-                w * 5 * progress
+                Math.max(1,w * 5 * progress)
             );
             grad2.addColorStop(0.1, "transparent");
             grad2.addColorStop(0.2, "#E03535");

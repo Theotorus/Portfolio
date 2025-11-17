@@ -13,8 +13,8 @@ export default {
                 fredoka: ['Fredoka', 'sans-serif'],
             },
             colors: {
-                primary: '#0077ff',
-                secondary: '#1e293b',
+                primary: '#ffffff',
+                secondary: '#bd0000',
             },
         },
     },

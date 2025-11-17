@@ -31,3 +31,33 @@ body {
     font-weight: 400;
     font-style: normal;
 }
+
+@keyframes fadeOutShrink {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9); /* léger shrink */
+    }
+}
+
+@keyframes fadeInGrow {
+    0% {
+        opacity: 0;
+        transform: scale(0.9); /* léger agrandissement */
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-fadeOutShrink {
+    animation: fadeOutShrink 0.40s ease-in-out forwards;
+}
+
+.animate-fadeInGrow {
+    animation: fadeInGrow 0.50s ease-out forwards;
+}

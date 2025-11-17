@@ -13,7 +13,7 @@ export default function IntroFooter() {
 
     };
     const handleOpenGithub = () => {
-        window.open("https://github.com/tonpseudo", "_blank");
+        window.open("https://github.com/Theotorus", "_blank");
     };
 
     return (

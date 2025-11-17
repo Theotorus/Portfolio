@@ -19,12 +19,11 @@ export default function MainHeader() {
     };
 
     const isIntro = location.pathname.startsWith("/intro");
-    const white = '#ffffff'
     return (
-        <header className="flex items-center justify-between bg-[rgba(0,0,0,0.75)]">
+        <header className="w-full h-5vh flex items-center justify-between bg-black">
             {!isIntro ? (
                 <IconButton onClick={() => navigate(`/intro/${lang}`)}>
-                    <HomeIcon color={white}/>
+                    <HomeIcon sx={{ color: "white" }}/>
                 </IconButton>
             ) : (<p>_</p>)}
             <div className="flex">
