@@ -1,18 +1,15 @@
 package mc.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -24,19 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 import mc.model.Repository
 import mc.ui.viewmodel.MainViewModel
+import mc.utils.TranslationManager
 import kotlin.math.ceil
-
-@Composable
-fun HorizontalSpacer(spacing: Int) {
-    Spacer(modifier = Modifier.width(spacing.dp))
-}
-
-@Composable
-fun VerticalSpacer(spacing: Int) {
-    Spacer(modifier = Modifier.width(spacing.dp))
-}
 
 @Composable
 fun AppText(
@@ -55,7 +44,7 @@ fun AppText(
         fontSize = fontSize.sp,
         fontStyle = fontStyle,
         textDecoration = textDecoration,
-        lineHeight = (ceil(fontSize*1.3f).toInt()).sp,
+        lineHeight = (ceil(fontSize * 1.3f).toInt()).sp,
     )
 }
 
@@ -86,4 +75,47 @@ fun ToastHost(vm: MainViewModel) {
             }
         }
     }
+}
+
+@Composable
+fun MainHeader(vm: MainViewModel, modifier: Modifier) {
+    Row(
+        modifier = modifier.fillMaxWidth().background(Color.Black).padding(horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        if (!vm.showProjects.value) {
+            Box {}
+        } else {
+            IconButton(
+                modifier = Modifier.size(28.dp),
+                onClick = {
+                    vm.showProjects.value = false
+                    vm.sprites.clear()
+                }
+            ) {
+                Icon(imageVector = Icons.Default.Home, contentDescription = "Home button", tint = Color.White)
+            }
+        }
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            val languages = listOf("en", "fr", "nl")
+            for (lang in languages) {
+                Text(
+                    modifier = Modifier.padding(horizontal = 4.dp).clickable {
+                        onLanguageButtonClick(vm, lang)
+                    },
+                    text = lang.uppercase(),
+                    color = if (vm.currentLanguage.value == lang) Color.White else Color.Gray,
+                    fontSize = 20.sp,
+                )
+            }
+        }
+    }
+}
+
+private fun onLanguageButtonClick(vm: MainViewModel, language: String) {
+    TranslationManager.load(language)
+    vm.currentLanguage.value = language
 }

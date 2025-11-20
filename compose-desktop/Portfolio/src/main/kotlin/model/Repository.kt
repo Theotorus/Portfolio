@@ -2,19 +2,18 @@ package mc.model
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.platform.Font
-import mc.utils.TranslationManager
+import kotlin.math.pow
+import kotlin.random.Random
 
 object Repository {
     var currentFont = mutableStateOf(Font("font/firacode-regular.ttf"))
-    fun buildText(list: List<String>, chip: String): String{
-        var formattedText = ""
-        for(element in list){
-            val builder = StringBuilder()
-            builder.append("$chip  ")
-            builder.append(TranslationManager.get(element))
-            builder.append("\n")
-            formattedText += builder.toString()
-        }
-        return formattedText
+    fun ClosedFloatingPointRange<Float>.random(precision: Int): Float{
+        require(precision >= 0) { "precision must be >= 0" }
+        val k = 10f.pow(precision)
+        val n1 = (start * k).toInt()
+        val n2 = (endInclusive * k).toInt()
+        val r = Random.nextInt(n1,n2+1)
+        println("($n1..$n2).random($precision) = ${r/k} ")
+        return (r / k)
     }
 }

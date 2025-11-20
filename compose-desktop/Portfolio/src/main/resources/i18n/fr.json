@@ -1,0 +1,71 @@
+{
+    "general":{
+        "copied_to_clipboard": "Adresse mail copiée dans le presse papier!",
+        "previous": "Projet précédent",
+        "next": "Projet suivant"
+    },
+    "intro":{
+        "title": "Développeur web & mobile",
+        "welcome": "Bienvenue sur mon portfolio.\nVous trouverez ici mes projets web et mobiles, développés avec différentes technologies et approches.\nN'hésitez pas à me contacter si mon travail vous plaît.",
+        "my_projects": "Mes projets"
+    },
+    "projects":{
+        "date_prefix": "Projet initié le ",
+        "categories": {
+            "0": "Technologies utilisées", 
+            "1": "Fonctionalités clés", 
+            "2": "Ce que j'ai appris / amélioré",
+            "3": "remarques"
+        },
+        "cosmic":{
+            "description": "Cosmic est une application Android qui relaye les informations issues d'une API publique sur les objets de notre système solaire : étoiles, planètes, lunes, astéroïdes, comètes et planètes naines. Elle permet de visualiser, filtrer et ordonner les corps célestes, accéder à leurs détails et se représenter leurs distances par rapport au Soleil.",
+            "key_functionalities":{
+                "0": "Affichage d'une liste de corps célestes avec informations principales",
+                "1": "Filtrage et tri des objets selon différents critères",
+                "2": "Détails complets d’un corps céleste sur un second écran",
+                "3": "Visualisation de la distance par rapport au Soleil sur un écran dédié",
+                "4": "Gestion des favoris avec persistance locale (Room)"
+            },
+            "learn":{
+                "0": "Premier projet kotlin & jetpack compose",
+                "1": "Intégration d'une API REST avec Retrofit",
+                "2": "Gestion d’état avec MVVM et Compose",
+                "3": "Persistance locale avec Room",
+                "4": "Navigation multi-écran avec Navigation Compose",
+                "5": "Visualisation et interaction graphique dans Compose",
+                "6": "Intégration de publicité bannière"
+            }
+        },
+        "in_life_among_us":{
+            "description": "In Life Among Us est un jeu multijoueur inspiré d’Among Us, mais ancré dans le monde réel. Les joueurs se connectent à un serveur local Spring Boot via une application Android. Chaque joueur reçoit un rôle — imposteur ou équipier — et doit interagir avec son environnement physique. Les QR codes placés dans le lieu servent de points d’interaction : les joueurs les scannent pour réaliser des actions, des missions ou même déclencher un appel d’urgence. Ainsi, presque toutes les activités passent par ces codes. Cette dynamique permet de créer une expérience immersive, mêlant jeu social et déplacement réel.",
+            "key_functionalities":{
+                "0": "Connexion des joueurs à un serveur local Spring Boot pour synchroniser les parties",
+                "1": "Attribution automatique des rôles : imposteur ou crew mate",
+                "2": "Interaction via QR codes : preque toutes les actions du jeu nécessitent de scanner un code présent dans le lieu",
+                "3": "Gestion d’actions contextuelles (missions, sabotages, appels d’urgence) depuis l’application",
+                "4": "Suivi de la dernière position connue des joueurs via les QR codes scannés",
+                "5": "Communication client-serveur sécurisée via Retrofit / OkHttp",
+                "6": "Utilisation de CameraX et permissions dynamiques pour le scan des codes QR"
+            },
+            "learn":{
+                "0": "Premier projet personnel avec un serveur spring",
+                "1": "Gestion de la caméra, des permissions, du flash et des QR codes"
+            },
+            "remarks": "⚠️Ce projet est un fan work non commercial réalisé à des fins de démonstration.\nEn cours de développement."
+        },
+        "cobria":{
+            "description": "Cobria est un site web réel crée par Jak Solutions dont le but est d'accompagner les entrepreneurs dans leur travail. Ma contribution dans ce vaste projet est minime mais elle m'a permis de travailler sur un véritable projet professionnel. J'ai principalement travailler sur l'onboarding, le système de récompense et sur le responsive de certains composants de Cobria.",
+            "key_functionalities":{
+                "0": "Créer et gérer ses contacts (clients, fournisseurs, etc.)",
+                "1": "Créer et gérer ses devis",
+                "2": "Créer et gérer les factures liés aux devis",
+                "3": "Construire et gérer un planning",
+                "4": "Assister la création des différents documents par IA"
+            },
+            "learn":{
+                "0": "Premier projet React Joyride",
+                "1": "Travail en équipe avec git"
+            }
+        }
+    }
+}

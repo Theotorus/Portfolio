@@ -9,5 +9,5 @@ abstract class Sprite{
     abstract val image: String
     abstract val rotation: MutableState<Float>
 
-    abstract fun move()
+    abstract fun move(delta: Float)
 }

@@ -2,25 +2,24 @@
 
 package mc.ui.view
 
+import Hexagon
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -28,10 +27,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import mc.model.PictureOrientation
 import mc.model.Project
-import mc.model.Repository.buildText
 import mc.model.projects
 import mc.ui.components.AppText
-import mc.ui.components.HorizontalSpacer
+import mc.ui.components.MainHeader
 import mc.ui.viewmodel.MainViewModel
 import mc.utils.TranslationManager
 import java.time.format.DateTimeFormatter
@@ -42,39 +40,60 @@ fun ProjectPage(project: Project = projects[0], vm: MainViewModel) {
     LaunchedEffect(true) {
         vm.initAnimations()
     }
-    BoxWithConstraints{
-        IconButton(modifier = Modifier.align(Alignment.TopStart), onClick = {vm.back()}){
-            Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back", tint = project.otherTextColor)
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 0.dp),
+    Column{
+        val windowHeight = (vm.windowSize.height - 12)
+        val headerHeight = (windowHeight) * 0.1f
+        val bodyHeight = windowHeight * 0.8f
+        val detailsColumnWidth = vm.windowSize.width * 0.43f
+        val actionBoxHeight = windowHeight * 0.05f
+        MainHeader(vm, Modifier)
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 0.dp),
             verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            val windowHeight = (vm.windowSize.height-12)
-            val headerHeight = (windowHeight) * 0.1f
-            val bodyHeight = windowHeight * 0.85f
-            val detailsColumnWidth = vm.windowSize.width * 0.43f
-            val picturesBoxWidth = vm.windowSize.width * 0.57f
-            val actionBoxHeight = windowHeight * 0.05f
+        ){
             ProjectHeader(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(headerHeight.dp)
-                    .padding(vertical = 4.dp),
+                    .height(headerHeight.dp),
                 project = project
             )
-            ProjectBody(vm,  project,  detailsColumnWidth, picturesBoxWidth, bodyHeight)
-            ActionBox(vm, project, actionBoxHeight)
+            ProjectBody(vm, project, detailsColumnWidth, bodyHeight)
+            ProjectFooter(vm, project, actionBoxHeight)
         }
-        /*Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = "${vm.windowSize.width} x ${vm.windowSize.height}",
-            color = Color.White,
-            textAlign = TextAlign.End
-        )*/
     }
+    /*Text(
+        modifier = Modifier.fillMaxWidth(),
+        text = "${vm.windowSize.width} x ${vm.windowSize.height}",
+        color = Color.White,
+        textAlign = TextAlign.End
+    )*/
+
+}
+
+@Composable
+fun ProjectBackground(scope: BoxWithConstraintsScope, vm: MainViewModel) {
+    val w = scope.constraints.maxWidth.toFloat()
+    val h = scope.constraints.maxHeight.toFloat()
+    for (sprite in vm.sprites) {
+        val pos = sprite.position.value
+        val rot = sprite.rotation.value
+
+        Image(
+            painter = painterResource(sprite.image),
+            contentDescription = null,
+            modifier = Modifier
+                .graphicsLayer {
+                    translationX = pos.first * w
+                    translationY = pos.second * h
+                    rotationZ = rot
+                }
+                .size(sprite.size.dp)
+                .then(if (sprite !is Hexagon) Modifier.blur(0.6.dp) else Modifier.alpha(sprite.alpha))
+        )
+    }
+
+
 }
 
 @Composable
@@ -104,35 +123,19 @@ fun ProjectHeader(modifier: Modifier, project: Project) {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+
 @Composable
 fun ProjectBody(
     vm: MainViewModel,
     project: Project,
     detailsColumnWidth: Float,
-    picturesBoxWidth: Float,
     bodyHeight: Float
 ) {
 
     BoxWithConstraints(
         modifier = Modifier.fillMaxWidth().height(bodyHeight.dp).clipToBounds(),
     ) {
-        val w = constraints.maxWidth.toFloat()
-        val h = constraints.maxHeight.toFloat()
-        vm.sprites.forEach { sprite ->
-            val pos by sprite.position  // 👈 observe la valeur, déclenche recomposition
-            Image(
-                painter = painterResource(sprite.image),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(sprite.size.dp)
-                    .absoluteOffset(
-                        x = (pos.first * w).dp,
-                        y = (pos.second * h).dp
-                    ).rotate(sprite.rotation.value)
-            )
-        }
-
+        ProjectBackground(this, vm)
         Column(modifier = Modifier.fillMaxWidth()) {
             AppText(
                 modifier = Modifier.fillMaxWidth().wrapContentHeight(),
@@ -145,46 +148,16 @@ fun ProjectBody(
                     .fillMaxWidth()
                     .wrapContentHeight()
                     .background(color = Color.Transparent)
-                    .verticalScroll(rememberScrollState())
             ) {
                 DetailsColumn(
                     modifier = Modifier.width(detailsColumnWidth.dp),
                     project = project
                 )
-                Box {
-                    Row(
-                        Modifier
-                            .width(picturesBoxWidth.dp)
-                            .height((bodyHeight*0.7f).dp)
-                            .horizontalScroll(rememberScrollState()),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        PicturesBox(
-                            project = project,
-                            h = bodyHeight,
-                        )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.CenterStart)
-                            .fillMaxHeight()
-                            .width(80.dp)
-                            .background(
-                                Brush.horizontalGradient(
-                                    listOf(project.backgroundColor, Color.Transparent)
-                                )
-                            )
-                    )
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .fillMaxHeight()
-                            .width(80.dp)
-                            .background(
-                                Brush.horizontalGradient(
-                                    listOf(Color.Transparent, project.backgroundColor)
-                                )
-                            )
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    PicturesBox(
+                        project = project,
+                        h = bodyHeight * 0.8f,
+                        vm = vm
                     )
                 }
             }
@@ -194,7 +167,7 @@ fun ProjectBody(
 }
 
 @Composable
-fun ActionBox(vm: MainViewModel, project: Project, height: Float) {
+fun ProjectFooter(vm: MainViewModel, project: Project, height: Float) {
     Box(
         modifier = Modifier.fillMaxWidth().height(height.dp)
     ) {
@@ -228,7 +201,7 @@ fun ActionBox(vm: MainViewModel, project: Project, height: Float) {
 @Composable
 fun DetailsColumn(modifier: Modifier, project: Project) {
     Column(
-        modifier = modifier,
+        modifier = modifier.verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         val titles = listOf(
@@ -239,8 +212,7 @@ fun DetailsColumn(modifier: Modifier, project: Project) {
         val colors = listOf(project.titleColor, project.otherTextColor)
         val elements = listOf(project.linkedTechnologies, project.keyFunctionalities, project.whatILearn)
         val chips = listOf("⚙️", "🧩", "✨")
-        HorizontalCategory(titles[0], colors, elements[0], chips[0])
-        for (i in 1 until titles.size) {
+        for (i in 0 until titles.size) {
             Category(title = titles[i], colors, elements[i], chips[i])
         }
         if (project.remarks.isNotEmpty()) {
@@ -254,36 +226,7 @@ fun DetailsColumn(modifier: Modifier, project: Project) {
     }
 }
 
-@Composable
-fun HorizontalCategory(title: String, colors: List<Color>, elements: List<String>, chip: String) {
-    AppText(
-        text = title,
-        fontSize = 40,
-        color = colors[0],
-        textDecoration = TextDecoration.Underline,
-    )
-    val chunks = elements.chunked(2)
-    chunks.forEach { chunk ->
-        LazyRow(
-            modifier = Modifier.padding(vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(32.dp)
-        ) {
-            items(chunk) { element ->
-                AppText(
-                    text = "$chip $element",
-                    color = colors[1],
-                    fontSize = 24,
-                    modifier = Modifier
-                        .border(1.dp, colors[0], RoundedCornerShape(25))
-                        .padding(horizontal = 12.dp, vertical = 6.dp)
-                )
-            }
-        }
-    }
-
-}
-
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun Category(title: String, colors: List<Color>, elements: List<String>, chip: String) {
     AppText(
@@ -292,34 +235,85 @@ fun Category(title: String, colors: List<Color>, elements: List<String>, chip: S
         color = colors[0],
         textDecoration = TextDecoration.Underline,
     )
-    AppText(
-        text = buildText(elements, chip),
-        color = colors[1],
-        fontSize = 24,
-    )
+    FlowRow(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        elements.forEach { element ->
+            val e = if (TranslationManager.get(element).contains("?")) element else TranslationManager.get(element)
+            val text = "$chip $e"
+            AppText(
+                modifier = Modifier
+                    .padding(horizontal = 8.dp, vertical = 6.dp)
+                    .border(1.dp, colors[0], RoundedCornerShape(40))
+                    .padding(vertical = 8.dp, horizontal = 12.dp),
+                text = text,
+                color = colors[1],
+                fontSize = 16,
+            )
+        }
+    }
 }
 
 @Composable
-fun PicturesBox(project: Project, h: Float) {
-    val portraitPictureModifier = Modifier
-        .height(h.dp)
-        .border(1.dp, project.otherTextColor)
-    val landscapePictureModifier = Modifier
-        .width(920.dp)
-        .border(1.dp, project.otherTextColor)
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(60.dp)
+fun PicturesBox(project: Project, h: Float, vm: MainViewModel) {
+    Column(
+        modifier = Modifier.padding(8.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        HorizontalSpacer(20)
-        project.images.forEach { img ->
+        val currentIndex = vm.currentPhotoDisplayedIndex.value
+
+        Crossfade(
+            targetState = currentIndex,
+            animationSpec = tween(durationMillis = 800)
+        ) { index ->
+
+            val img = project.images[index]
+
             Image(
                 painter = painterResource(img.first),
                 contentDescription = null,
-                modifier = if (img.second == PictureOrientation.PORTRAIT) portraitPictureModifier else landscapePictureModifier,
-                contentScale = if (img.second == PictureOrientation.LANDSCAPE) ContentScale.FillWidth else ContentScale.FillHeight,
+                modifier = Modifier.height(h.dp).clip(RoundedCornerShape(if(img.second == PictureOrientation.LANDSCAPE)10 else 2)),
+                contentScale = if (img.second == PictureOrientation.LANDSCAPE)
+                    ContentScale.FillWidth
+                else
+                    ContentScale.FillHeight
             )
         }
-        HorizontalSpacer(20)
+
+        if(project.images.size > 1) PictureSelector(vm, project)
     }
+}
+
+@Composable
+fun PictureSelector(vm: MainViewModel, project: Project) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(top = 8.dp)
+    ) {
+        for (i in 0 until project.images.size) {
+            CirclePictureSelectorButton(vm, i)
+        }
+    }
+}
+
+@Composable
+fun CirclePictureSelectorButton(vm: MainViewModel, index: Int) {
+    Box(
+        modifier = Modifier
+            .size(16.dp)
+            .clickable {
+                vm.currentPhotoDisplayedIndex.value = index
+            }
+            .border(2.dp, Color.White, CircleShape)
+            .then(
+                if (vm.currentPhotoDisplayedIndex.value == index) Modifier.background(
+                    Color.White,
+                    CircleShape
+                ) else Modifier
+            ),
+
+        )
 }

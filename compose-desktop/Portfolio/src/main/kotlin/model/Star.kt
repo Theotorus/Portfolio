@@ -12,8 +12,17 @@ class Star(
     override val image: String = "drawable/star2.png"
     override val rotation: MutableState<Float> = mutableStateOf(0f)
 
-    override fun move() {
-        position.value = (position.value.first-(velocity.first*6f)) to position.value.second
-        if (position.value.first <= 0f) position.value = 1f to position.value.second
+    override fun move(delta: Float) {
+        val dt = delta / 1000f
+        val dx = velocity.first * dt /20f
+
+        val newX = position.value.first - dx
+
+        position.value = newX to position.value.second
+
+        if (newX <= 0f) {
+            position.value = 1f to position.value.second
+        }
     }
+
 }

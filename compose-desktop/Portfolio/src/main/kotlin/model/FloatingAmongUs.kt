@@ -1,8 +1,7 @@
-package mc.amongus.model
+package mc.model
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableFloatStateOf
-import mc.model.Sprite
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -29,7 +28,7 @@ class FloatingAmongUs(
     override val size = (minSize..maxSize).random() / 1f
 
 
-    override fun move() {
+    override fun move(delta: Float) {
         val posX = position.value.first + (cos(angleDirection * (Math.PI.toFloat() / 180f)) * dx)
         val posY = position.value.second + (sin(angleDirection * (Math.PI.toFloat() / 180f)) * dy)
         if (posX < xMin || posY < yMin || posX > xMax || posY > yMax) {

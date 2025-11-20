@@ -1,0 +1,71 @@
+{
+    "general": {
+        "copied_to_clipboard": "Email address copied to clipboard!",
+        "previous": "Previous project",
+        "next": "Next project"
+    },
+    "intro": {
+        "title": "Web & Mobile Developer",
+        "welcome": "Welcome to my portfolio.\nHere you’ll find my web and mobile projects, developed with different technologies and approaches.\nFeel free to contact me if you like my work.",
+        "my_projects": "My projects"
+    },
+    "projects": {
+        "date_prefix": "Project started on ",
+        "categories": {
+            "0": "Used technologies",
+            "1": "Key features",
+            "2": "What I learned / improved",
+            "3": "Remarks"
+        },
+        "cosmic": {
+            "description": "Cosmic is an Android application that relays data from a public API about celestial bodies in our solar system: stars, planets, moons, asteroids, comets, and dwarf planets. It allows users to browse, filter, and sort these objects, access detailed information, and visualize their distances from the Sun.",
+            "key_functionalities": {
+                "0": "Displays a list of celestial bodies with main information",
+                "1": "Filtering and sorting objects by various criteria",
+                "2": "Detailed view of a celestial body on a secondary screen",
+                "3": "Visualization of the distance from the Sun on a dedicated screen",
+                "4": "Favorites management with local persistence (Room)"
+            },
+            "learn": {
+                "0": "First Kotlin & Jetpack Compose project",
+                "1": "REST API integration using Retrofit",
+                "2": "State management with MVVM and Compose",
+                "3": "Local persistence with Room",
+                "4": "Multi-screen navigation with Navigation Compose",
+                "5": "Graphical visualization and interaction in Compose",
+                "6": "Banner ad integration"
+            }
+        },
+        "in_life_among_us": {
+            "description": "In Life Among Us is a multiplayer game inspired by Among Us, but grounded in the real world. Players connect to a local Spring Boot server via an Android app. Each player is assigned a role — impostor or crewmate — and must interact with their physical environment. QR codes placed around the location act as interaction points: players scan them to perform actions, complete missions, or trigger emergency meetings. Almost all in-game actions rely on these codes, creating an immersive experience blending social gameplay with real-world movement.",
+            "key_functionalities": {
+                "0": "Player connection to a local Spring Boot server for game synchronization",
+                "1": "Automatic role assignment: impostor or crewmate",
+                "2": "QR code interactions: nearly every action requires scanning a code placed on-site",
+                "3": "Contextual actions (missions, sabotages, emergency meetings) handled through the app",
+                "4": "Tracking of players’ last known position based on scanned QR codes",
+                "5": "Secure client-server communication via Retrofit / OkHttp",
+                "6": "CameraX and dynamic permissions for QR code scanning"
+            },
+            "learn": {
+                "0": "First personal project using a Spring server",
+                "1": "Camera, permission, flash, and QR code handling"
+            },
+            "remarks": "⚠️This project is a non-commercial fan work made for demonstration purposes.\nCurrently in development."
+        },
+        "cobria": {
+            "description": "Cobria is a real web platform developed by Jak Solutions to help entrepreneurs manage their work. My contribution to this large-scale project was small, but it allowed me to work on a real professional product. I mainly worked on the onboarding flow, the reward system, and responsive adjustments on several Cobria components.",
+            "key_functionalities": {
+                "0": "Create and manage contacts (clients, suppliers, etc.)",
+                "1": "Create and manage quotes",
+                "2": "Create and manage invoices linked to quotes",
+                "3": "Build and manage a schedule",
+                "4": "Assist document creation with AI"
+            },
+            "learn": {
+                "0": "First project using React Joyride",
+                "1": "Team collaboration with Git"
+            }
+        }
+    }
+}
