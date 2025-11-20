@@ -45,6 +45,7 @@ open class MainViewModel() {
     val orbitron = Font("font/orbitron-regular.ttf")
     val fredoka = Font("font/fredoka.ttf")
     val fira = Font("font/firacode-regular.ttf")
+    val playfair = Font("font/playfair-display.ttf")
     val currentProjectIndex = mutableStateOf(0)
     val currentPhotoDisplayedIndex = mutableStateOf(0)
     val sprites: SnapshotStateList<Sprite> = mutableStateListOf()
@@ -156,6 +157,7 @@ open class MainViewModel() {
             when(currentProjectIndex.value) {
                 0 -> Repository.currentFont.value = orbitron
                 1 -> Repository.currentFont.value = fredoka
+                3 -> Repository.currentFont.value = playfair
                 else -> Repository.currentFont.value = fira
             }
         }else{
