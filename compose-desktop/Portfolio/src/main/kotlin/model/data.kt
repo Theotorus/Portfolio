@@ -132,8 +132,8 @@ val projects: List<Project> = listOf(
     ),
     Project(
         title = "Happen",
-        titleColor = Color(0xFFFFFFFF),
-        creationDate = LocalDate.of(2023, 6, 1), // Modifie selon la vraie date
+        titleColor = Color(16, 185, 129),
+        creationDate = LocalDate.of(2024, 11, 21),
         description = "projects.happen.description",
 
         linkedTechnologies = listOf(
@@ -173,15 +173,15 @@ val projects: List<Project> = listOf(
 
         images = listOf(
             // Remplace par tes propres captures
-            "drawable/happen0.png" to PictureOrientation.LANDSCAPE,
-            "drawable/happen1.png" to PictureOrientation.LANDSCAPE,
-            "drawable/happen2.png" to PictureOrientation.LANDSCAPE,
-            "drawable/happen3.png" to PictureOrientation.LANDSCAPE,
-            "drawable/happen4.png" to PictureOrientation.LANDSCAPE
+            "drawable/happen0.png" to LANDSCAPE,
+            "drawable/happen1.png" to LANDSCAPE,
+            "drawable/happen2.png" to LANDSCAPE,
+            "drawable/happen3.png" to LANDSCAPE,
+            "drawable/happen4.png" to LANDSCAPE
         ),
 
-        backgroundColor = Color(0xFF1E1E1E),
-        otherTextColor = Color(0xFFCCCCCC),
+        backgroundColor = Color(30,30,30),
+        otherTextColor = Color.White,
 
         remarks = ""
     )
