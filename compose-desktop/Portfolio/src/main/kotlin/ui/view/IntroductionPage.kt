@@ -3,6 +3,7 @@ package mc.ui.view
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
@@ -26,10 +27,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mc.ui.components.AppText
+import mc.ui.components.MainHeader
 import mc.ui.viewmodel.MainViewModel
 import mc.utils.TranslationManager
 import java.awt.Desktop
@@ -45,7 +48,7 @@ fun IntroductionPage(vm: MainViewModel) {
                 .padding(40.dp),
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Column(modifier = Modifier.background(color = Color.Black.copy(alpha = 0.25f))) {
+            Column {
                 AppText(
                     text = "Christopher Melis",
                     color = Color.White,
@@ -58,10 +61,10 @@ fun IntroductionPage(vm: MainViewModel) {
                 )
             }
             AppText(
-                modifier = Modifier.background(color = Color.Black.copy(alpha = 0.25f)),
+                modifier = Modifier.background(color = Color.Black.copy(alpha = 0.2f)),
                 text = TranslationManager.get("intro.welcome"),
-                color = Color.White.copy(alpha = 0.8f),
-                fontSize = 24
+                color = Color.White,
+                fontSize = 30
             )
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -71,14 +74,14 @@ fun IntroductionPage(vm: MainViewModel) {
                 AppText(
                     text = TranslationManager.get("intro.my_projects"),
                     color = Color.White,
-                    fontSize = 40,
+                    fontSize = 36,
                     textDecoration = TextDecoration.Underline,
                 )
-                Column {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     HoverButton(
                         modifier = Modifier,
-                        text = "> Cosmic",
-                        fontSize = 36,
+                        text = "Cosmic",
+                        fontSize = 32,
                         font = vm.fira
                     ) {
                         vm.selectProject(0)
@@ -86,16 +89,16 @@ fun IntroductionPage(vm: MainViewModel) {
 
                     HoverButton(
                         modifier = Modifier,
-                        text = "> In life Among Us",
-                        fontSize = 36,
+                        text = "In life Among Us",
+                        fontSize = 32,
                         font = vm.fira,
                     ) {
                         vm.selectProject(1)
                     }
                     HoverButton(
                         modifier = Modifier,
-                        text = "> Cobria",
-                        fontSize = 36,
+                        text = "Cobria",
+                        fontSize = 32,
                         font = vm.fira,
                     ) {
                         vm.selectProject(2)
@@ -105,37 +108,9 @@ fun IntroductionPage(vm: MainViewModel) {
         }
         Footer(
             vm = vm,
-            modifier = Modifier.fillMaxWidth().background(Color.Black.copy(alpha = 0.5f)).align(Alignment.BottomCenter)
+            modifier = Modifier.fillMaxWidth().background(Color.Black).align(Alignment.BottomCenter)
         )
-        Row(
-            modifier = Modifier.align(Alignment.TopEnd).padding(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Text(
-                modifier = Modifier.clickable {
-                    TranslationManager.load("en")
-                    vm.currentLanguage.value = "en"
-                },
-                text = "EN",
-                color = if(vm.currentLanguage.value == "en") Color.White else Color.Gray
-            )
-            Text(
-                modifier = Modifier.clickable {
-                    TranslationManager.load("fr")
-                    vm.currentLanguage.value = "fr"
-                },
-                text = "FR",
-                color = if(vm.currentLanguage.value == "fr") Color.White else Color.Gray
-            )
-            Text(
-                modifier = Modifier.clickable {
-                    TranslationManager.load("nl")
-                    vm.currentLanguage.value = "nl"
-                },
-                text = "NL",
-                color = if(vm.currentLanguage.value == "nl") Color.White else Color.Gray
-            )
-        }
+        MainHeader(vm, Modifier.align(Alignment.TopCenter))
     }
 }
 
@@ -261,6 +236,7 @@ fun HoverButton(modifier: Modifier, text: String, fontSize: Int, font: Font, onC
         colors = ButtonDefaults.buttonColors(
             backgroundColor = if (isHovered) Color(255, 255, 255, 128) else Color.Transparent
         ),
+        elevation = ButtonDefaults.elevation(defaultElevation = 0.dp, hoveredElevation = 0.dp),
         modifier = modifier.padding(8.dp).graphicsLayer {
             scaleX = if (isHovered) 1.05f else 1f
             scaleY = if (isHovered) 1.05f else 1f

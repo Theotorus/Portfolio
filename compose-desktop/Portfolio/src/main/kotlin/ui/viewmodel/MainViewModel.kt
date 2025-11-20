@@ -1,9 +1,8 @@
 package mc.ui.viewmodel
 
+import Hexagon
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.currentRecomposeScope
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -13,22 +12,20 @@ import androidx.compose.ui.unit.IntSize
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.swing.Swing
-import mc.amongus.model.FloatingAmongUs
+import mc.model.FloatingAmongUs
 import mc.model.Repository
 import mc.model.Sprite
 import mc.model.Star
 import mc.model.projects
 import mc.utils.TranslationManager
-import java.time.LocalTime
 import java.util.Locale
 import kotlin.math.cos
 import kotlin.math.ln
 import kotlin.math.sqrt
 import kotlin.random.Random
+import mc.model.Repository.random
 
 open class MainViewModel() {
     val currentLanguage = mutableStateOf("en")
@@ -49,8 +46,8 @@ open class MainViewModel() {
     val fredoka = Font("font/fredoka.ttf")
     val fira = Font("font/firacode-regular.ttf")
     val currentProjectIndex = mutableStateOf(0)
+    val currentPhotoDisplayedIndex = mutableStateOf(0)
     val sprites: SnapshotStateList<Sprite> = mutableStateListOf()
-    val starProperties = listOf((4f to 0.00008f), (3f to 0.00003f), (2f to 0.00001f))
     val floatingAmongUsImage = listOf(
         "drawable/among_us_red_nb.png",
         "drawable/among_us_blue_nb.png",
@@ -72,10 +69,12 @@ open class MainViewModel() {
         sprites.clear()
         when(currentProjectIndex.value) {
             0 -> {
-                repeat(200) {
-                    val props = starProperties.random()
+                repeat(120) {
+                    val size = (3..6).random().toFloat()
+
+                    val velocity = Random.nextFloat()/2f + 0.025f
                     val pos = generateStarPosition()
-                    sprites.add(Star(props.first, props.second to 0f, pos))
+                    sprites.add(Star(size, velocity to 0f, pos))
                 }
             }
             1 -> {
@@ -89,7 +88,15 @@ open class MainViewModel() {
                         )
                     )
                 }
-                println(sprites.map{it.toString()})
+            }
+            2 -> {
+                repeat(45) {
+                    val size = (35f..90f).random(0)
+                    val x = Random.nextFloat() // normalisé
+                    val y = 1.1f + Random.nextFloat() * 0.3f // spawn sous l'écran
+
+                    sprites.add(Hexagon(size, x, y))
+                }
             }
         }
         tick()
@@ -117,17 +124,25 @@ open class MainViewModel() {
     }
 
     fun tick() {
-        scope.launch(Dispatchers.Default) {
+        scope.launch {
+            var lastTime = System.nanoTime()
+
             while (true) {
-                delay(8)
+                val now = System.nanoTime()
+                val delta = (now - lastTime) / 1_000_000f // ms
+                lastTime = now
+
                 sprites.forEach { sprite ->
-                    sprite.move()
+                    sprite.move(delta)
                 }
+
+                delay(16)
             }
         }
     }
 
     fun onNext() {
+        currentPhotoDisplayedIndex.value = 0
         sprites.clear()
         if (projects.size > currentProjectIndex.value + 1) {
             currentProjectIndex.value++
@@ -149,17 +164,13 @@ open class MainViewModel() {
     }
 
     fun onPrevious() {
+        currentPhotoDisplayedIndex.value = 0
         sprites.clear()
         if (currentProjectIndex.value > 0) {
             currentProjectIndex.value--
             updateFont()
         }
         initAnimations()
-    }
-
-    fun back(){
-        showProjects.value = false
-        sprites.clear()
     }
 
     fun selectProject(index: Int) {

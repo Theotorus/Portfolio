@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "mc"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
@@ -28,7 +28,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.AppImage)
             packageName = "Portfolio"
-            packageVersion = "1.0.3"
+            packageVersion = "1.0.4"
             includeAllModules = true
         }
         buildTypes.release.proguard {
