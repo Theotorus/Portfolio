@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { projects } from "@data/projects.ts";
 
-export default function CobrIaBackground() {
+export default function CobriaBackground() {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     useEffect(() => {
