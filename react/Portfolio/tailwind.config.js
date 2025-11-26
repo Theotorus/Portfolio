@@ -11,6 +11,7 @@ export default {
                 fira: ['FiraCode', 'sans-serif'],
                 orbitron: ['Orbitron', 'sans-serif'],
                 fredoka: ['Fredoka', 'sans-serif'],
+                playfair: ['Playfair', 'serif'],
             },
             colors: {
                 primary: '#ffffff',

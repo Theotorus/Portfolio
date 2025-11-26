@@ -27,6 +27,7 @@ function IntroductionPage() {
         switch(index) {
             case 0: setFont('Orbitron'); break;
             case 1: setFont('Fredoka'); break;
+            case 3: setFont('Playfair'); break;
             default: setFont('FiraCode'); break;
         }
         navigate(`/projects/${index}/${lang}`);
@@ -49,6 +50,7 @@ function IntroductionPage() {
                         <HoverButton text='Cosmic' onClick={() => handleSelectProject(0)}/>
                         <HoverButton text='In Life Among Us' onClick={() => handleSelectProject(1)}/>
                         <HoverButton text='Cobria' onClick={() => handleSelectProject(2)}/>
+                        <HoverButton text='Happen' onClick={() => handleSelectProject(3)}/>
                     </div>
                 <IntroFooter/>
             </div>

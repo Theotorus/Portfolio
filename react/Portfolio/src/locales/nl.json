@@ -1,71 +1,94 @@
 {
-    "general": {
-        "copied_to_clipboard": "mailadres gekopieerd naar het klembord!",
-        "previous": "Vorig project",
-        "next": "Volgend project"
+  "general": {
+    "copied_to_clipboard": "mailadres gekopieerd naar het klembord!",
+    "previous": "Vorig project",
+    "next": "Volgend project"
+  },
+  "intro": {
+    "title": "Web- & Mobiele Ontwikkelaar",
+    "welcome": "Welkom op mijn portfolio.\nHier vind je mijn web- en mobiele projecten, ontwikkeld met verschillende technologieën en benaderingen.\nNeem gerust contact met mij op als je mijn werk leuk vindt.",
+    "my_projects": "Mijn projecten"
+  },
+  "projects": {
+    "date_prefix": "Project gestart op ",
+    "categories": {
+      "0": "Gebruikte technologieën",
+      "1": "Belangrijkste functies",
+      "2": "Wat ik heb geleerd / verbeterd",
+      "3": "Opmerkingen"
     },
-    "intro": {
-        "title": "Web- & Mobiele Ontwikkelaar",
-        "welcome": "Welkom op mijn portfolio.\nHier vind je mijn web- en mobiele projecten, ontwikkeld met verschillende technologieën en benaderingen.\nNeem gerust contact met mij op als je mijn werk leuk vindt.",
-        "my_projects": "Mijn projecten"
+    "cosmic": {
+      "description": "Cosmic is een Android-applicatie die gegevens weergeeft van een openbare API over hemellichamen in ons zonnestelsel: sterren, planeten, manen, asteroïden, kometen en dwergplaneten. De app maakt het mogelijk om deze objecten te bekijken, te filteren en te sorteren, gedetailleerde informatie te raadplegen en hun afstand tot de zon te visualiseren.",
+      "key_functionalities": {
+        "0": "Weergave van een lijst met hemellichamen met hun belangrijkste informatie",
+        "1": "Filteren en sorteren van objecten op basis van verschillende criteria",
+        "2": "Gedetailleerde weergave van een hemellichaam op een tweede scherm",
+        "3": "Visualisatie van de afstand tot de zon op een speciaal scherm",
+        "4": "Beheer van favorieten met lokale opslag (Room)"
+      },
+      "learn": {
+        "0": "Eerste project met Kotlin & Jetpack Compose",
+        "1": "Integratie van een REST API met Retrofit",
+        "2": "Toestandsbeheer met MVVM en Compose",
+        "3": "Lokale opslag met Room",
+        "4": "Navigatie tussen meerdere schermen met Navigation Compose",
+        "5": "Grafische visualisatie en interactie in Compose",
+        "6": "Integratie van banneradvertenties"
+      }
     },
-    "projects": {
-        "date_prefix": "Project gestart op ",
-        "categories": {
-            "0": "Gebruikte technologieën",
-            "1": "Belangrijkste functies",
-            "2": "Wat ik heb geleerd / verbeterd",
-            "3": "Opmerkingen"
-        },
-        "cosmic": {
-            "description": "Cosmic is een Android-applicatie die gegevens weergeeft van een openbare API over hemellichamen in ons zonnestelsel: sterren, planeten, manen, asteroïden, kometen en dwergplaneten. De app maakt het mogelijk om deze objecten te bekijken, te filteren en te sorteren, gedetailleerde informatie te raadplegen en hun afstand tot de zon te visualiseren.",
-            "key_functionalities": {
-                "0": "Weergave van een lijst met hemellichamen met hun belangrijkste informatie",
-                "1": "Filteren en sorteren van objecten op basis van verschillende criteria",
-                "2": "Gedetailleerde weergave van een hemellichaam op een tweede scherm",
-                "3": "Visualisatie van de afstand tot de zon op een speciaal scherm",
-                "4": "Beheer van favorieten met lokale opslag (Room)"
-            },
-            "learn": {
-                "0": "Eerste project met Kotlin & Jetpack Compose",
-                "1": "Integratie van een REST API met Retrofit",
-                "2": "Toestandsbeheer met MVVM en Compose",
-                "3": "Lokale opslag met Room",
-                "4": "Navigatie tussen meerdere schermen met Navigation Compose",
-                "5": "Grafische visualisatie en interactie in Compose",
-                "6": "Integratie van banneradvertenties"
-            }
-        },
-        "in_life_among_us": {
-            "description": "In Life Among Us is een multiplayergame geïnspireerd op Among Us, maar gebaseerd op de echte wereld. Spelers verbinden via een Android-app met een lokale Spring Boot-server. Elke speler krijgt een rol — bedrieger of teamlid — en moet interageren met zijn fysieke omgeving. QR-codes die op locatie zijn geplaatst dienen als interactiepunten: spelers scannen ze om acties uit te voeren, missies te voltooien of een noodvergadering te starten. Bijna alle spelactiviteiten maken gebruik van deze codes, wat zorgt voor een meeslepende ervaring die sociaal spel combineert met echte beweging.",
-            "key_functionalities": {
-                "0": "Verbinding van spelers met een lokale Spring Boot-server voor gamesynchronisatie",
-                "1": "Automatische toewijzing van rollen: bedrieger of teamlid",
-                "2": "Interactie via QR-codes: bijna elke actie vereist het scannen van een code op locatie",
-                "3": "Beheer van contextuele acties (missies, sabotage, noodvergaderingen) via de app",
-                "4": "Bijhouden van de laatst bekende positie van spelers op basis van gescande QR-codes",
-                "5": "Beveiligde client-servercommunicatie via Retrofit / OkHttp",
-                "6": "Gebruik van CameraX en dynamische machtigingen voor QR-code scanning"
-            },
-            "learn": {
-                "0": "Eerste persoonlijk project met een Spring-server",
-                "1": "Beheer van camera, machtigingen, flitser en QR-codes"
-            },
-            "remarks": "⚠️Dit project is een niet-commercieel fanproject, gemaakt voor demonstratiedoeleinden.\nMomenteel in ontwikkeling."
-        },
-        "cobria": {
-            "description": "Cobria is een echte webtoepassing ontwikkeld door Jak Solutions om ondernemers te ondersteunen in hun werk. Mijn bijdrage aan dit grootschalige project was klein, maar het gaf me de kans om aan een professioneel product te werken. Ik heb vooral gewerkt aan de onboarding, het beloningssysteem en het responsive gedrag van enkele Cobria-componenten.",
-            "key_functionalities": {
-                "0": "Contacten aanmaken en beheren (klanten, leveranciers, enz.)",
-                "1": "Offertes aanmaken en beheren",
-                "2": "Facturen aanmaken en beheren die aan offertes zijn gekoppeld",
-                "3": "Een planning opstellen en beheren",
-                "4": "Hulp bij het aanmaken van documenten met AI"
-            },
-            "learn": {
-                "0": "Eerste project met React Joyride",
-                "1": "Samenwerking in teamverband met Git"
-            }
-        }
+    "in_life_among_us": {
+      "description": "In Life Among Us is een multiplayergame geïnspireerd op Among Us, maar gebaseerd op de echte wereld. Spelers verbinden via een Android-app met een lokale Spring Boot-server. Elke speler krijgt een rol — bedrieger of teamlid — en moet interageren met zijn fysieke omgeving. QR-codes die op locatie zijn geplaatst dienen als interactiepunten: spelers scannen ze om acties uit te voeren, missies te voltooien of een noodvergadering te starten. Bijna alle spelactiviteiten maken gebruik van deze codes, wat zorgt voor een meeslepende ervaring die sociaal spel combineert met echte beweging.",
+      "key_functionalities": {
+        "0": "Verbinding van spelers met een lokale Spring Boot-server voor gamesynchronisatie",
+        "1": "Automatische toewijzing van rollen: bedrieger of teamlid",
+        "2": "Interactie via QR-codes: bijna elke actie vereist het scannen van een code op locatie",
+        "3": "Beheer van contextuele acties (missies, sabotage, noodvergaderingen) via de app",
+        "4": "Bijhouden van de laatst bekende positie van spelers op basis van gescande QR-codes",
+        "5": "Beveiligde client-servercommunicatie via Retrofit / OkHttp",
+        "6": "Gebruik van CameraX en dynamische machtigingen voor QR-code scanning"
+      },
+      "learn": {
+        "0": "Eerste persoonlijk project met een Spring-server",
+        "1": "Beheer van camera, machtigingen, flitser en QR-codes"
+      },
+      "remarks": "⚠️Dit project is een niet-commercieel fanproject, gemaakt voor demonstratiedoeleinden.\nMomenteel in ontwikkeling."
+    },
+    "cobria": {
+      "description": "Cobria is een echte webtoepassing ontwikkeld door Jak Solutions om ondernemers te ondersteunen in hun werk. Mijn bijdrage aan dit grootschalige project was klein, maar het gaf me de kans om aan een professioneel product te werken. Ik heb vooral gewerkt aan de onboarding, het beloningssysteem en het responsive gedrag van enkele Cobria-componenten.",
+      "key_functionalities": {
+        "0": "Contacten aanmaken en beheren (klanten, leveranciers, enz.)",
+        "1": "Offertes aanmaken en beheren",
+        "2": "Facturen aanmaken en beheren die aan offertes zijn gekoppeld",
+        "3": "Een planning opstellen en beheren",
+        "4": "Hulp bij het aanmaken van documenten met AI"
+      },
+      "learn": {
+        "0": "Eerste project met React Joyride",
+        "1": "Samenwerking in teamverband met Git"
+      }
+    },
+    "happen": {
+      "description": "Happen is een webapplicatie waarmee gebruikers lokale evenementen kunnen ontdekken, aanmaken en beheren. De applicatie is gebouwd op een volledige architectuur: een Spring Boot-backend met een beveiligde REST-API, en een Angular 18-frontend die PrimeNG gebruikt voor de interface.",
+      "key_functionalities": {
+        "0": "Aanmaken van evenementen via een REST-API",
+        "1": "Weergave en filtering van evenementen per regio",
+        "2": "Inzien van de details van een evenement",
+        "3": "Toevoegen van opmerkingen en beoordelingen aan een evenement",
+        "4": "Beheer van gebruikers (ophalen, zoeken op e-mail, verificatie van bestaan)",
+        "5": "Beveiligde authenticatie met JWT",
+        "6": "API-documentatie via OpenAPI/Swagger"
+      },
+      "learn": {
+        "0": "Eerste webproject met Spring en Angular",
+        "1": "Een backend ontwikkelen met Spring Boot en een lagenarchitectuur",
+        "2": "Beveiligde authenticatie implementeren met JWT en Spring Security",
+        "3": "Een complex relationeel datamodel beheren met JPA/Hibernate",
+        "4": "Een Angular-app structureren met routing, componenten en services",
+        "5": "PrimeNG gebruiken om de ontwikkeling van interfaces te versnellen",
+        "6": "Schone communicatie tussen front-end en back-end opzetten met DTO’s",
+        "7": "Een gedocumenteerde en bruikbare REST-API maken met Swagger",
+        "8": "Werken in een full-stack omgeving: Angular ↔ Spring Boot ↔ PostgreSQL"
+      }
     }
+  }
 }

@@ -149,5 +149,53 @@ export const projects: Project[] = [
         backgroundColor: '#FFE4C4',
         otherTextColor: '#FD8A3A',
         remarks: ""
+    },
+    {
+        title: "Happen",
+        titleColor: "#10B981",
+        creationDate: "21/11/2024",
+        description: "projects.happen.description",
+        linkedTechnologies: [
+            "Angular 18",
+            "PrimeNG",
+            "TypeScript",
+            "RxJS",
+            "Spring Boot",
+            "Spring Security",
+            "JWT",
+            "JPA / Hibernate",
+            "PostgreSQL",
+            "Swagger / OpenAPI"
+        ],
+        keyFunctionalities: [
+            "projects.happen.key_functionalities.0",
+            "projects.happen.key_functionalities.1",
+            "projects.happen.key_functionalities.2",
+            "projects.happen.key_functionalities.3",
+            "projects.happen.key_functionalities.4",
+            "projects.happen.key_functionalities.5",
+            "projects.happen.key_functionalities.6"
+        ],
+        whatILearn: [
+            "projects.happen.learn.0",
+            "projects.happen.learn.1",
+            "projects.happen.learn.2",
+            "projects.happen.learn.3",
+            "projects.happen.learn.4",
+            "projects.happen.learn.5",
+            "projects.happen.learn.6",
+            "projects.happen.learn.7",
+            "projects.happen.learn.8"
+        ],
+        images: [
+            { path: "/images/happen0.png", orientation: "LANDSCAPE"},
+            { path: "/images/happen1.png", orientation: "LANDSCAPE"},
+            { path: "/images/happen2.png", orientation: "LANDSCAPE"},
+            { path: "/images/happen3.png", orientation: "LANDSCAPE"},
+            { path: "/images/happen4.png", orientation: "LANDSCAPE"}
+        ],
+        backgroundColor: "#1E1E1E",
+        otherTextColor: "#fff",
+        remarks: ""
     }
 ];
