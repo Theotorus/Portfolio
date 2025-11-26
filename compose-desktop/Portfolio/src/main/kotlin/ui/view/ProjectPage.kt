@@ -2,13 +2,14 @@
 
 package mc.ui.view
 
-import Hexagon
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -18,6 +19,9 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -27,6 +31,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import mc.model.PictureOrientation
 import mc.model.Project
+import mc.model.animations.Confetti
+import mc.model.animations.Hexagon
 import mc.model.projects
 import mc.ui.components.AppText
 import mc.ui.components.MainHeader
@@ -78,19 +84,29 @@ fun ProjectBackground(scope: BoxWithConstraintsScope, vm: MainViewModel) {
     for (sprite in vm.sprites) {
         val pos = sprite.position.value
         val rot = sprite.rotation.value
+        if(vm.currentProjectIndex.value != 3){
 
-        Image(
-            painter = painterResource(sprite.image),
-            contentDescription = null,
-            modifier = Modifier
-                .graphicsLayer {
-                    translationX = pos.first * w
-                    translationY = pos.second * h
-                    rotationZ = rot
-                }
-                .size(sprite.size.dp)
-                .then(if (sprite !is Hexagon) Modifier.blur(0.6.dp) else Modifier.alpha(sprite.alpha))
-        )
+            Image(
+                painter = painterResource(sprite.image),
+                contentDescription = null,
+                modifier = Modifier
+                    .graphicsLayer {
+                        translationX = pos.first * w
+                        translationY = pos.second * h
+                        rotationZ = rot
+                    }
+                    .size(sprite.size.dp)
+                    .then(if (sprite !is Hexagon) Modifier.blur(0.6.dp) else Modifier.alpha(sprite.alpha))
+            )
+        }else{
+            val confetti = sprite as Confetti
+            val alpha = confetti.alpha.value
+
+            val x = pos.first * w
+            val y = pos.second * h
+
+            Box(modifier = Modifier.size((confetti.size).dp).offset(x.dp,y.dp).rotate(confetti.rotation.value).background(color = confetti.color.second.copy(alpha = alpha)))
+        }
     }
 
 

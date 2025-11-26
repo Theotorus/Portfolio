@@ -1,7 +1,8 @@
-package mc.model
+package mc.model.animations
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableFloatStateOf
+import mc.model.Sprite
 import kotlin.math.cos
 import kotlin.math.sin
 

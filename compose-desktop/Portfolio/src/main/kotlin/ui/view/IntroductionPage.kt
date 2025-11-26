@@ -118,24 +118,19 @@ private fun Background(w: Int) {
         )
     )
 
-    // Création du gradient animé
     val gradientBrush = Brush.radialGradient(
         colors = listOf(
             Color.Transparent,
             Color(0xFFE03535),
-            //Color.Transparent,
             Color(0xFFC9B21C),
             Color(0xFFC9B21C),
-            //Color.Transparent,
             Color(0xFF25BA1A),
             Color(0xFF25BA1A),
             Color(0xFF25BA1A),
-            //Color.Transparent,
             Color(0xFF1A3DBA),
             Color(0xFF1A3DBA),
             Color(0xFF1A3DBA),
             Color(0xFF1A3DBA),
-            //Color.Transparent,
             Color(0xFF571ABA),
             Color(0xFF571ABA),
             Color(0xFF571ABA),
@@ -150,14 +145,10 @@ private fun Background(w: Int) {
         colors = listOf(
             Color.Transparent,
             Color(0xFFE03535),
-            //Color.Transparent,
             Color(0xFFC9B21C),
-            //Color.Transparent,
             Color(0xFF25BA1A),
-            //Color.Transparent,
             Color(0xFF1A3DBA),
             Color(0xFF1A3DBA),
-            //Color.Transparent,
             Color(0xFF571ABA),
             Color(0xFF571ABA),
             Color.Transparent,
@@ -177,7 +168,7 @@ private fun Background(w: Int) {
     )
     Image(
         modifier = Modifier.fillMaxSize(),
-        painter = painterResource("drawable/hexagons3.png"), // ton motif transparent
+        painter = painterResource("drawable/hexagons3.png"),
         contentDescription = null,
         contentScale = ContentScale.FillBounds
     )
