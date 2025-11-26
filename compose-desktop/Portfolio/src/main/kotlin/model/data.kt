@@ -129,5 +129,61 @@ val projects: List<Project> = listOf(
         backgroundColor = Color(255, 228, 196, 255),
         otherTextColor = Color(253, 138, 58, 255),
         remarks = ""
+    ),
+    Project(
+        title = "Happen",
+        titleColor = Color(16, 185, 129),
+        creationDate = LocalDate.of(2024, 11, 21),
+        description = "projects.happen.description",
+
+        linkedTechnologies = listOf(
+            "Angular 18",
+            "PrimeNG",
+            "TypeScript",
+            "RxJS",
+            "Spring Boot",
+            "Spring Security",
+            "JWT",
+            "JPA / Hibernate",
+            "PostgreSQL",
+            "Swagger / OpenAPI"
+        ),
+
+        keyFunctionalities = listOf(
+            "projects.happen.key_functionalities.0",
+            "projects.happen.key_functionalities.1",
+            "projects.happen.key_functionalities.2",
+            "projects.happen.key_functionalities.3",
+            "projects.happen.key_functionalities.4",
+            "projects.happen.key_functionalities.5",
+            "projects.happen.key_functionalities.6"
+        ),
+
+        whatILearn = listOf(
+            "projects.happen.learn.0",
+            "projects.happen.learn.1",
+            "projects.happen.learn.2",
+            "projects.happen.learn.3",
+            "projects.happen.learn.4",
+            "projects.happen.learn.5",
+            "projects.happen.learn.6",
+            "projects.happen.learn.7",
+            "projects.happen.learn.8",
+        ),
+
+        images = listOf(
+            // Remplace par tes propres captures
+            "drawable/happen0.png" to LANDSCAPE,
+            "drawable/happen1.png" to LANDSCAPE,
+            "drawable/happen2.png" to LANDSCAPE,
+            "drawable/happen3.png" to LANDSCAPE,
+            "drawable/happen4.png" to LANDSCAPE
+        ),
+
+        backgroundColor = Color(30,30,30),
+        otherTextColor = Color.White,
+
+        remarks = ""
     )
+
 )

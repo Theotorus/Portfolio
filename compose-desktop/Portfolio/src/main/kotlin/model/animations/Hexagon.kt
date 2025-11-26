@@ -1,3 +1,5 @@
+package mc.model.animations
+
 import androidx.compose.runtime.mutableStateOf
 import mc.model.Sprite
 import kotlin.math.PI

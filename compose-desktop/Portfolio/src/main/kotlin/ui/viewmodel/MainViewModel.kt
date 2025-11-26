@@ -1,6 +1,6 @@
 package mc.ui.viewmodel
 
-import Hexagon
+import mc.model.animations.Hexagon
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
@@ -14,10 +14,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import mc.model.FloatingAmongUs
+import kotlinx.coroutines.withContext
+import mc.model.animations.FloatingAmongUs
 import mc.model.Repository
 import mc.model.Sprite
-import mc.model.Star
+import mc.model.animations.Star
 import mc.model.projects
 import mc.utils.TranslationManager
 import java.util.Locale
@@ -26,6 +27,7 @@ import kotlin.math.ln
 import kotlin.math.sqrt
 import kotlin.random.Random
 import mc.model.Repository.random
+import mc.model.animations.Confetti
 
 open class MainViewModel() {
     val currentLanguage = mutableStateOf("en")
@@ -33,7 +35,7 @@ open class MainViewModel() {
     val showProjects = mutableStateOf(false)
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.Default + job)
-    var windowSize by mutableStateOf( IntSize(0, 0))
+    var windowSize by mutableStateOf(IntSize(0, 0))
         private set
 
     fun updateWindowSize(width: Int, height: Int) {
@@ -45,6 +47,7 @@ open class MainViewModel() {
     val orbitron = Font("font/orbitron-regular.ttf")
     val fredoka = Font("font/fredoka.ttf")
     val fira = Font("font/firacode-regular.ttf")
+    val playfair = Font("font/playfair-display.ttf")
     val currentProjectIndex = mutableStateOf(0)
     val currentPhotoDisplayedIndex = mutableStateOf(0)
     val sprites: SnapshotStateList<Sprite> = mutableStateListOf()
@@ -61,24 +64,30 @@ open class MainViewModel() {
         "drawable/among_us_yellow_nb.png"
     )
 
+    private var confettiBurstPhase = 0               // 0 = top/bottom, 1 = left/right, 2 = corners
+    private var timeSinceLastBurst = 0f
+    private val confettiBurstDelay = 2500f
+
     init {
         TranslationManager.load(Locale.getDefault().language)
         currentLanguage.value = Locale.getDefault().language
     }
+
     fun initAnimations() {
         sprites.clear()
-        when(currentProjectIndex.value) {
+        when (currentProjectIndex.value) {
             0 -> {
                 repeat(120) {
                     val size = (3..6).random().toFloat()
 
-                    val velocity = Random.nextFloat()/2f + 0.025f
+                    val velocity = Random.nextFloat() / 2f + 0.025f
                     val pos = generateStarPosition()
                     sprites.add(Star(size, velocity to 0f, pos))
                 }
             }
+
             1 -> {
-                for(i in 0 until floatingAmongUsImage.size) {
+                for (i in 0 until floatingAmongUsImage.size) {
                     val floatingAmongUsImage = floatingAmongUsImage[i]
                     sprites.add(
                         FloatingAmongUs(
@@ -89,27 +98,63 @@ open class MainViewModel() {
                     )
                 }
             }
+
             2 -> {
                 repeat(45) {
                     val size = (35f..90f).random(0)
-                    val x = Random.nextFloat() // normalisé
-                    val y = 1.1f + Random.nextFloat() * 0.3f // spawn sous l'écran
+                    val x = Random.nextFloat()
+                    val y = 1.1f + Random.nextFloat() * 0.3f
 
                     sprites.add(Hexagon(size, x, y))
                 }
+            }
+
+            3 -> {
+                confettiBurstPhase = 0
+                timeSinceLastBurst = 0f
+                spawnHappenBurst()
             }
         }
         tick()
     }
 
-    fun generateFloatingAmongUsPosition(): Pair<Float, Float>{
-        val x = listOf(0f,0.8f).random()
+    fun tick() {
+        scope.launch {
+            var lastTime = System.nanoTime()
+
+            while (true) {
+                val now = System.nanoTime()
+                val delta = (now - lastTime) / 1_000_000f // ms
+                lastTime = now
+                withContext(Dispatchers.Main) {
+
+                    sprites.forEach { sprite ->
+                        sprite.move(delta)
+                    }
+                    if (currentProjectIndex.value == 3) {
+                        timeSinceLastBurst += delta
+                        if (timeSinceLastBurst >= confettiBurstDelay) {
+                            timeSinceLastBurst -= confettiBurstDelay
+                            spawnHappenBurst()
+                        }
+
+                        sprites.removeAll { it is Confetti && it.isDead }
+                    }
+                }
+
+                delay(16)
+            }
+        }
+    }
+
+    fun generateFloatingAmongUsPosition(): Pair<Float, Float> {
+        val x = listOf(0f, 0.8f).random()
         val y = gaussianClamped(mean = 0.5f, stdDev = 0.20f)
         return x to y
     }
 
     fun generateStarPosition(): Pair<Float, Float> {
-        val x = Random.nextFloat() // uniforme horizontalement
+        val x = Random.nextFloat()
         val y = gaussianClamped(mean = 0.5f, stdDev = 0.22f)
         return x to y
     }
@@ -123,24 +168,6 @@ open class MainViewModel() {
         return value.coerceIn(0f, 1f)
     }
 
-    fun tick() {
-        scope.launch {
-            var lastTime = System.nanoTime()
-
-            while (true) {
-                val now = System.nanoTime()
-                val delta = (now - lastTime) / 1_000_000f // ms
-                lastTime = now
-
-                sprites.forEach { sprite ->
-                    sprite.move(delta)
-                }
-
-                delay(16)
-            }
-        }
-    }
-
     fun onNext() {
         currentPhotoDisplayedIndex.value = 0
         sprites.clear()
@@ -151,14 +178,15 @@ open class MainViewModel() {
         initAnimations()
     }
 
-    fun updateFont(){
-        if(showProjects.value) {
-            when(currentProjectIndex.value) {
+    fun updateFont() {
+        if (showProjects.value) {
+            when (currentProjectIndex.value) {
                 0 -> Repository.currentFont.value = orbitron
                 1 -> Repository.currentFont.value = fredoka
+                3 -> Repository.currentFont.value = playfair
                 else -> Repository.currentFont.value = fira
             }
-        }else{
+        } else {
             Repository.currentFont.value = fira
         }
     }
@@ -182,11 +210,59 @@ open class MainViewModel() {
         updateFont()
     }
 
-    fun showToast(message: String){
+    fun showToast(message: String) {
         toastMessage.value = message
         CoroutineScope(Dispatchers.Main).launch {
             delay(1500)
             toastMessage.value = ""
         }
     }
+
+    private fun spawnHappenBurst() {
+        val phaseLocal = confettiBurstPhase
+        confettiBurstPhase = (confettiBurstPhase + 1) % 3
+
+        fun addFrom(
+            originX: Float,
+            originY: Float,
+            baseAngleDeg: Float,
+            count: Int
+        ) {
+            val dispersionRad = Math.toRadians(120.0).toFloat()
+            repeat(count) {
+                val angle = baseAngleDeg.toRad() +
+                        (Random.nextFloat() - 0.5f) * dispersionRad
+
+                sprites.add(
+                    Confetti(
+                        mutableStateOf(originX to originY),
+                        mutableStateOf(angle),
+                    )
+                )
+            }
+        }
+
+        when (phaseLocal) {
+            0 -> {
+                addFrom(0.5f, 0.05f, 90f, 12)  // from top
+                addFrom(0.5f, 1f, -90f, 12)   // from bottom
+            }
+
+            1 -> {
+                addFrom(-0.05f, 0.5f, 0f, 12)    // from left
+                addFrom(1.05f, 0.5f, 180f, 12)   // from right
+            }
+
+            2 -> {
+                addFrom(-0.05f, 0.05f, 45f, 6)  // from top-left corner
+                addFrom(1.05f, 0.05f, 135f, 6)  // from top-right corner
+                addFrom(-0.05f, 1f, -45f, 6)    // from bottom-left
+                addFrom(1.05f, 1f, -135f, 6)    // from bottom-right
+            }
+        }
+    }
+
+    private fun Float.toRad(): Float =
+        (this * Math.PI / 180.0).toFloat()
+
 }

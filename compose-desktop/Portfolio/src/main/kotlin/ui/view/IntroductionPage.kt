@@ -3,7 +3,6 @@ package mc.ui.view
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
@@ -27,10 +26,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import mc.model.projects
 import mc.ui.components.AppText
 import mc.ui.components.MainHeader
 import mc.ui.viewmodel.MainViewModel
@@ -78,30 +77,15 @@ fun IntroductionPage(vm: MainViewModel) {
                     textDecoration = TextDecoration.Underline,
                 )
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    HoverButton(
-                        modifier = Modifier,
-                        text = "Cosmic",
-                        fontSize = 32,
-                        font = vm.fira
-                    ) {
-                        vm.selectProject(0)
-                    }
-
-                    HoverButton(
-                        modifier = Modifier,
-                        text = "In life Among Us",
-                        fontSize = 32,
-                        font = vm.fira,
-                    ) {
-                        vm.selectProject(1)
-                    }
-                    HoverButton(
-                        modifier = Modifier,
-                        text = "Cobria",
-                        fontSize = 32,
-                        font = vm.fira,
-                    ) {
-                        vm.selectProject(2)
+                    for ((i, project) in projects.withIndex()) {
+                        HoverButton(
+                            modifier = Modifier,
+                            text = project.title,
+                            fontSize = 32,
+                            font = vm.fira
+                        ) {
+                            vm.selectProject(i)
+                        }
                     }
                 }
             }
@@ -115,7 +99,7 @@ fun IntroductionPage(vm: MainViewModel) {
 }
 
 @Composable
-private fun Background(w: Int){
+private fun Background(w: Int) {
     val infiniteTransition = rememberInfiniteTransition()
     val offsetAnim by infiniteTransition.animateFloat(
         initialValue = 0f,
@@ -134,24 +118,19 @@ private fun Background(w: Int){
         )
     )
 
-    // Création du gradient animé
     val gradientBrush = Brush.radialGradient(
         colors = listOf(
             Color.Transparent,
             Color(0xFFE03535),
-            //Color.Transparent,
             Color(0xFFC9B21C),
             Color(0xFFC9B21C),
-            //Color.Transparent,
             Color(0xFF25BA1A),
             Color(0xFF25BA1A),
             Color(0xFF25BA1A),
-            //Color.Transparent,
             Color(0xFF1A3DBA),
             Color(0xFF1A3DBA),
             Color(0xFF1A3DBA),
             Color(0xFF1A3DBA),
-            //Color.Transparent,
             Color(0xFF571ABA),
             Color(0xFF571ABA),
             Color(0xFF571ABA),
@@ -166,14 +145,10 @@ private fun Background(w: Int){
         colors = listOf(
             Color.Transparent,
             Color(0xFFE03535),
-            //Color.Transparent,
             Color(0xFFC9B21C),
-            //Color.Transparent,
             Color(0xFF25BA1A),
-            //Color.Transparent,
             Color(0xFF1A3DBA),
             Color(0xFF1A3DBA),
-            //Color.Transparent,
             Color(0xFF571ABA),
             Color(0xFF571ABA),
             Color.Transparent,
@@ -193,7 +168,7 @@ private fun Background(w: Int){
     )
     Image(
         modifier = Modifier.fillMaxSize(),
-        painter = painterResource("drawable/hexagons3.png"), // ton motif transparent
+        painter = painterResource("drawable/hexagons3.png"),
         contentDescription = null,
         contentScale = ContentScale.FillBounds
     )
@@ -210,7 +185,7 @@ private fun Footer(vm: MainViewModel, modifier: Modifier) {
             text = "christophermx95@gmail.com",
             fontSize = 22,
             color = Color.White
-        ){
+        ) {
             clipboardManager.setText(AnnotatedString("christophermx95@gmail.com"))
             vm.showToast(TranslationManager.get("general.copied_to_clipboard"))
         }
